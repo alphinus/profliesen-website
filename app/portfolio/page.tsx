@@ -1,68 +1,118 @@
 import Hero from '@/components/marketing/Hero';
+import ImageGallery, { GalleryImage } from '@/components/ui/ImageGallery';
+import BeforeAfterSlider from '@/components/ui/BeforeAfterSlider';
 
 export default function PortfolioPage() {
-  const projects = [
+  const galleryImages: GalleryImage[] = [
     {
-      title: 'Komplette Altbausanierung',
-      category: 'Sanierung',
-      description: 'Denkmalgerechte Sanierung eines Gründerzeithauses unter Erhalt historischer Substanz.',
-      image: '🏛️',
-      details: ['Fassadensanierung', 'Innenausbau', 'Elektrik & Sanitär'],
-    },
-    {
-      title: 'Moderne Badsanierung',
+      id: 1,
+      src: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800',
+      alt: 'Modernes Badezimmer mit großformatigen Fliesen',
+      title: 'Luxus-Badezimmer',
       category: 'Badezimmer',
-      description: 'Verwandlung eines alten Badezimmers in eine moderne Wellness-Oase.',
-      image: '🛁',
-      details: ['Komplette Fliesenarbeiten', 'Ebenerdige Dusche', 'Fußbodenheizung'],
+      featured: true,
     },
     {
-      title: 'Dachgeschoss-Ausbau',
-      category: 'Innenausbau',
-      description: 'Ausbau eines ungenutzten Dachgeschosses zu modernem Wohnraum.',
-      image: '🏠',
-      details: ['Wärmedämmung', 'Trockenbau', 'Dachfenster'],
+      id: 2,
+      src: 'https://images.unsplash.com/photo-1620626011761-996317b8d101?w=800',
+      alt: 'Elegante Küche mit Wandfliesen',
+      title: 'Moderne Küche',
+      category: 'Küche',
+      featured: true,
     },
     {
-      title: 'Gewerbeobjekt-Renovierung',
-      category: 'Gewerbe',
-      description: 'Komplette Renovierung eines Ladengeschäfts mit kurzer Bauzeit.',
-      image: '🏪',
-      details: ['Bodenbeläge', 'Malerarbeiten', 'Beleuchtungskonzept'],
-    },
-    {
-      title: 'Terrassenbau mit Holzdeck',
+      id: 3,
+      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800',
+      alt: 'Terrasse mit Natursteinplatten',
+      title: 'Naturstein-Terrasse',
       category: 'Außenbereich',
-      description: 'Errichtung einer großzügigen Holzterrasse mit integrierter Beleuchtung.',
-      image: '🌳',
-      details: ['Holzkonstruktion', 'LED-Beleuchtung', 'Wetterbeständig'],
     },
     {
-      title: 'Küchen-Modernisierung',
-      category: 'Innenausbau',
-      description: 'Neugestaltung einer Küche mit modernem Design und praktischer Aufteilung.',
-      image: '👨‍🍳',
-      details: ['Fliesenarbeiten', 'Elektroinstallation', 'Wasseranschlüsse'],
+      id: 4,
+      src: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
+      alt: 'Modernes Wohnzimmer mit Bodenfliesen',
+      title: 'Wohnzimmer Premium',
+      category: 'Wohnbereich',
+    },
+    {
+      id: 5,
+      src: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800',
+      alt: 'Elegantes Bad mit Mosaik',
+      title: 'Mosaik-Design Bad',
+      category: 'Badezimmer',
+      featured: true,
+    },
+    {
+      id: 6,
+      src: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800',
+      alt: 'Minimalistisches Badezimmer',
+      title: 'Minimalist Bath',
+      category: 'Badezimmer',
+    },
+    {
+      id: 7,
+      src: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800',
+      alt: 'Geräumige Küche mit Fliesenrückwand',
+      title: 'Familienküche',
+      category: 'Küche',
+    },
+    {
+      id: 8,
+      src: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800',
+      alt: 'Balkon mit Terrassenplatten',
+      title: 'Balkon-Oase',
+      category: 'Außenbereich',
+    },
+    {
+      id: 9,
+      src: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=800',
+      alt: 'Großzügiger Wohnbereich',
+      title: 'Penthouse Wohnbereich',
+      category: 'Wohnbereich',
+    },
+    {
+      id: 10,
+      src: 'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=800',
+      alt: 'Spa-ähnliches Badezimmer',
+      title: 'Wellness-Bad',
+      category: 'Badezimmer',
+    },
+    {
+      id: 11,
+      src: 'https://images.unsplash.com/photo-1556911220-bff31c812dba?w=800',
+      alt: 'Moderne offene Küche',
+      title: 'Open Space Küche',
+      category: 'Küche',
+    },
+    {
+      id: 12,
+      src: 'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800',
+      alt: 'Gartenterrasse mit Platten',
+      title: 'Garten-Terrasse',
+      category: 'Außenbereich',
+      featured: true,
     },
   ];
+
+  const categories = ['Badezimmer', 'Küche', 'Wohnbereich', 'Außenbereich'];
 
   const testimonials = [
     {
       name: 'Familie Müller',
-      project: 'Badsanierung',
-      text: 'Hervorragende Arbeit! Pünktlich, sauber und genau nach unseren Wünschen umgesetzt.',
+      project: 'Komplett-Badsanierung',
+      text: 'Absolute Spitzenleistung! Die Fliesen wurden millimetergenau verlegt. Das Team war pünktlich, sauber und äußerst professionell.',
       rating: 5,
     },
     {
       name: 'Thomas Schmidt',
-      project: 'Dachausbau',
-      text: 'Professionelle Beratung und Ausführung. Wir würden jederzeit wieder beauftragen.',
+      project: 'Terrassenverlegung',
+      text: 'Wir sind begeistert von unserer neuen Terrasse! Die Beratung war top und die Ausführung perfekt. Sehr empfehlenswert!',
       rating: 5,
     },
     {
       name: 'Petra Weber',
-      project: 'Altbausanierung',
-      text: 'Sehr zufrieden mit dem Ergebnis. Das Team hat großartige Arbeit geleistet!',
+      project: 'Küchen-Fliesenrückwand',
+      text: 'Die Fliesenarbeiten in unserer Küche sind ein Traum geworden. Tolle Beratung bei der Auswahl und präzise Verlegung!',
       rating: 5,
     },
   ];
@@ -71,75 +121,81 @@ export default function PortfolioPage() {
     <>
       <Hero
         title="Unsere Referenzen"
-        subtitle="Überzeugen Sie sich von der Qualität unserer Arbeit anhand ausgewählter Projekte"
+        subtitle="Entdecken Sie unsere hochwertigen Fliesen- und Plattenarbeiten - Jedes Projekt ein Meisterstück"
       />
 
-      {/* Projects Section */}
+      {/* Gallery Section */}
       <section className="section bg-white">
         <div className="container-custom">
           <div className="text-center mb-12">
-            <h2 className="section-title">Ausgewählte Projekte</h2>
+            <h2 className="section-title">Projekt-Galerie</h2>
             <p className="section-subtitle max-w-3xl mx-auto">
-              Jedes Projekt ist einzigartig - hier sehen Sie eine Auswahl unserer erfolgreich abgeschlossenen Arbeiten
+              Durchstöbern Sie unsere Referenzprojekte und lassen Sie sich inspirieren.
+              Klicken Sie auf ein Bild für die Detailansicht.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-lg border border-secondary-200 overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1"
-              >
-                <div className="h-48 bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-7xl">
-                  {project.image}
-                </div>
-                <div className="p-6">
-                  <div className="text-sm text-primary-600 font-semibold mb-2">
-                    {project.category}
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 text-secondary-900">
-                    {project.title}
-                  </h3>
-                  <p className="text-secondary-600 mb-4">{project.description}</p>
+          <ImageGallery images={galleryImages} categories={categories} />
+        </div>
+      </section>
 
-                  <ul className="space-y-1">
-                    {project.details.map((detail, idx) => (
-                      <li key={idx} className="flex items-center text-sm text-secondary-700">
-                        <svg
-                          className="w-4 h-4 text-primary-600 mr-2 flex-shrink-0"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                        {detail}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
+      {/* Before/After Showcase */}
+      <section className="section bg-secondary-50">
+        <div className="container-custom">
+          <div className="text-center mb-12">
+            <h2 className="section-title">Vorher & Nachher</h2>
+            <p className="section-subtitle max-w-3xl mx-auto">
+              Sehen Sie die beeindruckende Transformation - von alt zu neu
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-secondary-900">
+                Badezimmer-Renovierung
+              </h3>
+              <BeforeAfterSlider
+                beforeImage="https://images.unsplash.com/photo-1620626011761-996317b8d101?w=800"
+                afterImage="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800"
+                alt="Badezimmer Renovierung"
+              />
+              <p className="mt-4 text-secondary-600">
+                Aus einem veralteten Bad wurde eine moderne Wellness-Oase mit großformatigen
+                Fliesen und elegantem Design.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-secondary-900">
+                Terrassen-Neugestaltung
+              </h3>
+              <BeforeAfterSlider
+                beforeImage="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800"
+                afterImage="https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800"
+                alt="Terrassen Neugestaltung"
+              />
+              <p className="mt-4 text-secondary-600">
+                Die alte Terrasse wurde komplett erneuert mit hochwertigen Natursteinplatten
+                für maximale Langlebigkeit.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Testimonials Section */}
-      <section className="section bg-secondary-50">
+      <section className="section bg-white">
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="section-title">Das sagen unsere Kunden</h2>
             <p className="section-subtitle max-w-3xl mx-auto">
-              Kundenzufriedenheit steht bei uns an erster Stelle
+              Kundenzufriedenheit steht bei uns an erster Stelle - Lesen Sie echte Bewertungen
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-md">
+              <div key={index} className="bg-secondary-50 p-6 rounded-lg shadow-md">
                 <div className="flex mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <svg
@@ -163,19 +219,41 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Statistics Section */}
       <section className="section bg-primary-600 text-white">
+        <div className="container-custom">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+              <div className="text-4xl md:text-5xl font-bold mb-2">500+</div>
+              <div className="text-primary-100">Projekte abgeschlossen</div>
+            </div>
+            <div>
+              <div className="text-4xl md:text-5xl font-bold mb-2">20+</div>
+              <div className="text-primary-100">Jahre Erfahrung</div>
+            </div>
+            <div>
+              <div className="text-4xl md:text-5xl font-bold mb-2">100%</div>
+              <div className="text-primary-100">Kundenzufriedenheit</div>
+            </div>
+            <div>
+              <div className="text-4xl md:text-5xl font-bold mb-2">∞</div>
+              <div className="text-primary-100">Leidenschaft für Fliesen</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="section bg-white">
         <div className="container-custom text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-secondary-900">
             Ihr Projekt könnte das nächste sein!
           </h2>
-          <p className="text-xl mb-8 text-primary-100 max-w-2xl mx-auto">
-            Lassen Sie uns gemeinsam Ihr Projekt verwirklichen. Kontaktieren Sie uns für ein unverbindliches Angebot.
+          <p className="text-xl mb-8 text-secondary-600 max-w-2xl mx-auto">
+            Lassen Sie uns gemeinsam Ihren Traum verwirklichen. Kontaktieren Sie uns für ein
+            unverbindliches Beratungsgespräch.
           </p>
-          <a
-            href="/kontakt"
-            className="btn-primary bg-white text-primary-600 hover:bg-primary-50 inline-block"
-          >
+          <a href="/kontakt" className="btn-primary inline-block">
             Jetzt Projekt starten
           </a>
         </div>

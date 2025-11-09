@@ -3,70 +3,89 @@ import Hero from '@/components/marketing/Hero';
 export default function LeistungenPage() {
   const services = [
     {
-      title: 'Renovierung & Sanierung',
-      description: 'Umfassende Renovierungs- und Sanierungsarbeiten für Wohn- und Geschäftsräume. Von der Planung bis zur schlüsselfertigen Übergabe.',
+      title: 'Fliesen- & Plattenverlegung',
+      description: 'Professionelle Verlegung aller Arten von Fliesen und Platten für Innen- und Außenbereiche.',
       features: [
-        'Komplette Raumrenovierung',
-        'Altbausanierung',
-        'Denkmalschutz-Sanierung',
-        'Modernisierung',
+        'Wandfliesen & Bodenfliesen',
+        'Großformat-Fliesen',
+        'Naturstein & Mosaik',
+        'Feinsteinzeug',
       ],
-      icon: '🏗️',
+      icon: '🏛️',
     },
     {
-      title: 'Innenausbau',
-      description: 'Professioneller Innenausbau nach Ihren individuellen Wünschen und Vorstellungen.',
-      features: [
-        'Trockenbau & Ständerwände',
-        'Deckenverkleidung',
-        'Bodenverlegung',
-        'Malerarbeiten',
-      ],
-      icon: '🎨',
-    },
-    {
-      title: 'Außenarbeiten',
-      description: 'Fachgerechte Arbeiten an der Gebäudeaußenseite für langanhaltenden Schutz und Optik.',
-      features: [
-        'Fassadenarbeiten',
-        'Dacharbeiten',
-        'Terrassenbau',
-        'Zaunbau',
-      ],
-      icon: '🏠',
-    },
-    {
-      title: 'Badezimmer & Sanitär',
-      description: 'Komplette Badsanierung und sanitäre Installationen vom Fachmann.',
+      title: 'Badsanierung',
+      description: 'Komplette Badrenovierung vom Fachmann - von der Planung bis zur Fertigstellung.',
       features: [
         'Komplett-Badsanierung',
-        'Fliesenverlegung',
-        'Sanitärinstallation',
+        'Modernisierung',
         'Barrierefreie Bäder',
+        'Wellness-Bäder',
       ],
       icon: '🚿',
     },
     {
-      title: 'Elektroarbeiten',
-      description: 'Sichere und normgerechte Elektroinstallationen für Ihr Zuhause oder Unternehmen.',
+      title: 'Terrassen & Balkone',
+      description: 'Hochwertige Außenbereichsgestaltung mit langlebigen Materialien.',
       features: [
-        'Elektroinstallation',
-        'Smart Home Integration',
-        'Beleuchtungskonzepte',
-        'Elektro-Checks',
+        'Terrassenplatten',
+        'Balkonbeläge',
+        'Natursteinverlegung',
+        'Abdichtung',
       ],
-      icon: '⚡',
+      icon: '🌿',
     },
     {
-      title: 'Reparaturen & Wartung',
-      description: 'Schnelle Hilfe bei Reparaturen und regelmäßige Wartungsarbeiten.',
+      title: 'Küchen',
+      description: 'Fliesenarbeiten für Ihre Traumküche - funktional und ästhetisch.',
       features: [
-        'Schnelle Reparaturen',
-        'Wartungsarbeiten',
-        'Notdienst',
-        'Inspektionen',
+        'Fliesenrückwand',
+        'Arbeitsplatten',
+        'Bodenfliesen',
+        'Spritzschutz',
       ],
-      icon: '🔧',
+      icon: '👨‍🍳',
+    },
+    {
+      title: 'Trockenbau',
+      description: 'Professionelle Trockenbauarbeiten für jeden Bedarf.',
+      features: [
+        'Raumteiler & Wände',
+        'Deckenabhängung',
+        'Schallschutz',
+        'Dachausbau',
+      ],
+      icon: '🔨',
+    },
+    {
+      title: 'Malerarbeiten',
+      description: 'Hochwertige Malerarbeiten als perfekte Ergänzung zu Fliesenarbeiten.',
+      features: [
+        'Innenanstrich',
+        'Fassadenanstrich',
+        'Tapezierarbeiten',
+        'Spachteltechnik',
+      ],
+      icon: '🎨',
+    },
+  ];
+
+  const materials = [
+    {
+      name: 'Keramik',
+      description: 'Klassische und moderne Keramikfliesen in allen Formaten',
+    },
+    {
+      name: 'Feinsteinzeug',
+      description: 'Hochwertige, extrem belastbare Fliesen für höchste Ansprüche',
+    },
+    {
+      name: 'Naturstein',
+      description: 'Marmor, Granit, Schiefer und weitere edle Natursteine',
+    },
+    {
+      name: 'Mosaik',
+      description: 'Kunstvolle Mosaike für besondere Akzente',
     },
   ];
 
@@ -74,16 +93,17 @@ export default function LeistungenPage() {
     <>
       <Hero
         title="Unsere Leistungen"
-        subtitle="Umfassende Handwerksleistungen aus Meisterhand - Für Privat- und Gewerbekunden"
+        subtitle="Fachgerechte Fliesen- und Plattenverlegung sowie Komplettlösungen für Ihr Zuhause"
       />
 
+      {/* Main Services */}
       <section className="section bg-white">
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="section-title">Kompetenz in allen Bereichen</h2>
             <p className="section-subtitle max-w-3xl mx-auto">
-              Als Meisterbetrieb bieten wir Ihnen professionelle Handwerksleistungen in allen Gewerken.
-              Überzeugen Sie sich von unserer Expertise und Qualität.
+              Als Fachbetrieb für Fliesen- und Plattenverlegung bieten wir Ihnen das komplette Spektrum
+              professioneller Handwerksleistungen.
             </p>
           </div>
 
@@ -123,19 +143,96 @@ export default function LeistungenPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Materials Section */}
+      <section className="section bg-secondary-50">
+        <div className="container-custom">
+          <div className="text-center mb-12">
+            <h2 className="section-title">Materialien</h2>
+            <p className="section-subtitle max-w-3xl mx-auto">
+              Wir verarbeiten alle gängigen Materialien und beraten Sie gerne bei der Auswahl
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {materials.map((material, index) => (
+              <div key={index} className="bg-white p-6 rounded-lg shadow-md text-center">
+                <h3 className="text-xl font-bold mb-2 text-secondary-900">{material.name}</h3>
+                <p className="text-secondary-600 text-sm">{material.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Process Section */}
+      <section className="section bg-white">
+        <div className="container-custom">
+          <div className="text-center mb-12">
+            <h2 className="section-title">Unser Prozess</h2>
+            <p className="section-subtitle max-w-3xl mx-auto">
+              Von der ersten Idee bis zur Fertigstellung - so läuft Ihr Projekt ab
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+            {[
+              { step: '1', title: 'Beratung', desc: 'Kostenlose Erstberatung vor Ort' },
+              { step: '2', title: 'Planung', desc: 'Detaillierte Planung & Angebot' },
+              { step: '3', title: 'Material', desc: 'Materialauswahl & Beschaffung' },
+              { step: '4', title: 'Ausführung', desc: 'Professionelle Umsetzung' },
+              { step: '5', title: 'Übergabe', desc: 'Abnahme & Nachbetreuung' },
+            ].map((item, index) => (
+              <div key={index} className="text-center">
+                <div className="bg-primary-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold shadow-lg">
+                  {item.step}
+                </div>
+                <h3 className="text-lg font-bold mb-2 text-secondary-900">{item.title}</h3>
+                <p className="text-secondary-600 text-sm">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Quality Promise */}
       <section className="section bg-primary-600 text-white">
+        <div className="container-custom">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Unser Qualitätsversprechen
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+              <div>
+                <div className="text-4xl mb-3">✓</div>
+                <h3 className="font-bold text-lg mb-2">Präzise Verlegung</h3>
+                <p className="text-primary-100">Millimetergenau und fachgerecht</p>
+              </div>
+              <div>
+                <div className="text-4xl mb-3">✓</div>
+                <h3 className="font-bold text-lg mb-2">Premium Materialien</h3>
+                <p className="text-primary-100">Nur hochwertige Markenprodukte</p>
+              </div>
+              <div>
+                <div className="text-4xl mb-3">✓</div>
+                <h3 className="font-bold text-lg mb-2">5 Jahre Garantie</h3>
+                <p className="text-primary-100">Auf alle unsere Arbeiten</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="section bg-white">
         <div className="container-custom text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-secondary-900">
             Ihre Leistung nicht dabei?
           </h2>
-          <p className="text-xl mb-8 text-primary-100 max-w-2xl mx-auto">
-            Sprechen Sie uns an! Wir beraten Sie gerne zu allen Handwerksleistungen und finden die passende Lösung für Ihr Projekt.
+          <p className="text-xl mb-8 text-secondary-600 max-w-2xl mx-auto">
+            Sprechen Sie uns an! Wir beraten Sie gerne zu allen Fliesen- und Handwerksleistungen
+            und finden die passende Lösung für Ihr Projekt.
           </p>
-          <a
-            href="/kontakt"
-            className="btn-primary bg-white text-primary-600 hover:bg-primary-50 inline-block"
-          >
+          <a href="/kontakt" className="btn-primary inline-block">
             Jetzt anfragen
           </a>
         </div>

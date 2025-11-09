@@ -1,26 +1,27 @@
 import Hero from '@/components/marketing/Hero';
 import Link from 'next/link';
+import BeforeAfterSlider from '@/components/ui/BeforeAfterSlider';
 
 export default function Home() {
   const services = [
     {
-      title: 'Renovierung',
-      description: 'Komplette Renovierungsarbeiten für Wohn- und Geschäftsräume',
-      icon: '🏗️',
+      title: 'Fliesen & Platten',
+      description: 'Professionelle Verlegung von Fliesen und Naturstein für Boden und Wand',
+      icon: '🏛️',
     },
     {
-      title: 'Sanierung',
-      description: 'Fachgerechte Sanierung von Altbauten und denkmalgeschützten Gebäuden',
-      icon: '🔨',
+      title: 'Bad & Sanitär',
+      description: 'Komplette Badsanierung mit hochwertigen Fliesen und modernem Design',
+      icon: '🚿',
     },
     {
-      title: 'Innenausbau',
-      description: 'Professioneller Innenausbau nach Ihren individuellen Wünschen',
-      icon: '🎨',
+      title: 'Terrassen & Außenbereich',
+      description: 'Terrassenplatten, Balkon und Außenfliesen für jeden Anspruch',
+      icon: '🌿',
     },
     {
-      title: 'Reparaturen',
-      description: 'Schnelle und zuverlässige Reparaturarbeiten aller Art',
+      title: 'Allround-Service',
+      description: 'Trockenbau, Malerarbeiten und weitere Handwerksleistungen',
       icon: '🔧',
     },
   ];
@@ -47,8 +48,8 @@ export default function Home() {
   return (
     <>
       <Hero
-        title="Meisterhafte Handwerkskunst für Ihr Zuhause"
-        subtitle="Professionelle Handwerksleistungen mit über 20 Jahren Erfahrung. Von der Planung bis zur Fertigstellung - Ihr Projekt in besten Händen."
+        title="Meisterhafte Fliesenarbeiten & Allround-Handwerk"
+        subtitle="Professionelle Fliesen- und Plattenverlegung mit über 20 Jahren Erfahrung. Von der Planung bis zur perfekten Ausführung."
       />
 
       {/* Services Section */}
@@ -106,6 +107,33 @@ export default function Home() {
                 <p className="text-secondary-600">{feature.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Before/After Section */}
+      <section className="section bg-white">
+        <div className="container-custom">
+          <div className="text-center mb-12">
+            <h2 className="section-title">Vorher & Nachher</h2>
+            <p className="section-subtitle max-w-2xl mx-auto">
+              Sehen Sie selbst, wie wir Räume verwandeln - mit Präzision und Liebe zum Detail
+            </p>
+          </div>
+
+          <BeforeAfterSlider
+            beforeImage="https://images.unsplash.com/photo-1620626011761-996317b8d101?w=800"
+            afterImage="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800"
+            alt="Badezimmer Renovierung"
+          />
+
+          <div className="text-center mt-8">
+            <p className="text-secondary-600 mb-4">
+              Ziehen Sie den Regler, um den Unterschied zu sehen
+            </p>
+            <Link href="/portfolio" className="btn-primary inline-block">
+              Weitere Projekte ansehen
+            </Link>
           </div>
         </div>
       </section>

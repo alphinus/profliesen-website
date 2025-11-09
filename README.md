@@ -1,14 +1,36 @@
-# Handwerker Website
+# ProFliesen - Fliesen & Plattenleger Website
 
-Eine moderne, responsive Website für einen Handwerker-Meisterbetrieb, gebaut mit Next.js und Tailwind CSS.
+Eine state-of-the-art, professionelle Website für einen Fliesenleger-Fachbetrieb mit intelligenter Galerie und modernen Features, gebaut mit Next.js und Tailwind CSS.
 
 ## Features
 
-- **Responsive Design**: Optimiert für alle Geräte (Desktop, Tablet, Mobile)
-- **Moderne Technologien**: Next.js 16, React 19, TypeScript, Tailwind CSS
+### 🎨 Design & UX
+- **Responsive Design**: Perfekt optimiert für alle Geräte (Desktop, Tablet, Mobile)
+- **Moderne UI**: Professionelles Design speziell für Fliesenleger/Handwerker
+- **Animationen**: Smooth Transitions und Hover-Effekte
+
+### 🖼️ Intelligente Galerie (State-of-the-Art)
+- **Filterfunktion**: Kategorisierung nach Badezimmer, Küche, Wohnbereich, Außenbereich
+- **Lightbox**: Vollbild-Ansicht mit Keyboard-Navigation (←/→/Esc)
+- **Lazy Loading**: Performance-optimiert mit Next.js Image
+- **Featured Projects**: Hervorhebung besonderer Projekte
+- **Click to Zoom**: Intuitive Bildvergrößerung
+
+### ⚡ Vorher/Nachher-Slider
+- **Interactive Slider**: Drag & Touch-Support
+- **Before/After Comparison**: Visueller Vergleich von Projekten
+- **Responsive**: Funktioniert auf allen Geräten
+
+### 🚀 Technologie
+- **Next.js 16**: Neueste Version mit App Router
+- **React 19**: Modernste React-Features
+- **TypeScript**: Type-Safe Development
+- **Tailwind CSS 3**: Utility-First Styling
 - **SEO-optimiert**: Meta-Tags, strukturierte Daten, semantisches HTML
-- **Performance**: Schnelle Ladezeiten durch Next.js Optimierungen
-- **Vorbereitet für Shop-Integration**: Modulare Struktur für zukünftige E-Commerce-Features
+- **Performance**: Next.js Image Optimization, Lazy Loading
+
+### 🛒 Shop-Ready
+- **Vorbereitet für E-Commerce**: Modulare Struktur für zukünftige Shop-Integration
 
 ## Seiten
 

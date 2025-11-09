@@ -20,8 +20,12 @@ export default function Header() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="text-2xl font-bold text-primary-600">
-              Meisterbetrieb
+            <Link href="/" className="flex items-center gap-2">
+              <span className="text-3xl">🏗️</span>
+              <div className="flex flex-col">
+                <span className="text-xl font-bold text-primary-600">ProFliesen</span>
+                <span className="text-xs text-secondary-600">Ihr Fliesen-Experte</span>
+              </div>
             </Link>
           </div>
 

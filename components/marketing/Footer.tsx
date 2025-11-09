@@ -9,12 +9,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
-            <h3 className="text-2xl font-bold text-primary-400 mb-4">
-              Meisterbetrieb
-            </h3>
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-4xl">🏗️</span>
+              <h3 className="text-2xl font-bold text-primary-400">
+                ProFliesen
+              </h3>
+            </div>
             <p className="text-secondary-300 mb-4">
-              Ihr zuverlässiger Partner für professionelle Handwerksleistungen.
-              Qualität und Präzision seit über 20 Jahren.
+              Ihr Fachbetrieb für professionelle Fliesen- und Plattenverlegung.
+              Meisterhafte Qualität und Präzision seit über 20 Jahren.
             </p>
             <div className="space-y-2 text-secondary-300">
               <p>Musterstraße 123</p>
@@ -81,7 +84,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-secondary-700 mt-8 pt-8 text-center text-secondary-400">
-          <p>&copy; {currentYear} Meisterbetrieb. Alle Rechte vorbehalten.</p>
+          <p>&copy; {currentYear} ProFliesen - Ihr Fliesen-Experte. Alle Rechte vorbehalten.</p>
         </div>
       </div>
     </footer>
