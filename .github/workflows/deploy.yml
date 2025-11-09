@@ -1,0 +1,33 @@
+name: Deploy on Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # Nur bei Version Tags (v0.1, v0.2, etc.)
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Trigger Vercel Deployment
+        run: |
+          echo "Version Tag detected: ${{ github.ref_name }}"
+          echo "Vercel deploys automatically via GitHub integration"
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref_name }}
+          body: |
+            ProFliesen Website Release ${{ github.ref_name }}
+
+            Automatisch deployed auf Vercel.
+            Live URL: https://profliesen-website.vercel.app
+          draft: false
+          prerelease: false
