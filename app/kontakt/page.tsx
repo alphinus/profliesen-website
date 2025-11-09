@@ -2,44 +2,82 @@
 
 import Hero from '@/components/marketing/Hero';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { contactFormSchema, type ContactFormData } from '@/lib/validation';
+import ImageUpload from '@/components/ui/ImageUpload';
+import { uploadImage, submitContactForm } from '@/lib/supabase';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function KontaktPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    service: '',
-    message: '',
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
   });
 
-  const [submitted, setSubmitted] = useState(false);
+  const onSubmit = async (data: ContactFormData) => {
+    setIsSubmitting(true);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Hier später Formspree oder andere Form-Handler Integration
-    console.log('Form submitted:', formData);
-    setSubmitted(true);
+    try {
+      // 1. Upload images first
+      const imageUrls: string[] = [];
 
-    // Reset nach 3 Sekunden
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        service: '',
-        message: '',
+      if (uploadedFiles.length > 0) {
+        toast.loading(`Bilder werden hochgeladen... (0/${uploadedFiles.length})`, {
+          id: 'upload',
+        });
+
+        for (let i = 0; i < uploadedFiles.length; i++) {
+          const file = uploadedFiles[i];
+          const url = await uploadImage(file);
+
+          if (url) {
+            imageUrls.push(url);
+            toast.loading(`Bilder werden hochgeladen... (${i + 1}/${uploadedFiles.length})`, {
+              id: 'upload',
+            });
+          }
+        }
+
+        toast.dismiss('upload');
+      }
+
+      // 2. Submit form with image URLs
+      const result = await submitContactForm({
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        service: data.service,
+        message: data.message,
+        images: imageUrls,
       });
-    }, 3000);
-  };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+      if (result.success) {
+        toast.success('✅ Anfrage erfolgreich gesendet! Wir melden uns in Kürze.', {
+          duration: 5000,
+        });
+        reset();
+        setUploadedFiles([]);
+      } else {
+        toast.error(`❌ Fehler: ${result.error || 'Bitte versuchen Sie es später erneut.'}`, {
+          duration: 5000,
+        });
+      }
+    } catch (error) {
+      console.error('Submit error:', error);
+      toast.error('❌ Ein unerwarteter Fehler ist aufgetreten', {
+        duration: 5000,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -56,12 +94,35 @@ export default function KontaktPage() {
     {
       icon: '✉️',
       title: 'E-Mail',
-      info: ['info@meisterbetrieb.de', 'Antwort innerhalb von 24h'],
+      info: ['info@profliesen.de', 'Antwort innerhalb von 24h'],
     },
   ];
 
   return (
     <>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: '#363636',
+            color: '#fff',
+          },
+          success: {
+            iconTheme: {
+              primary: '#22c55e',
+              secondary: '#fff',
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: '#ef4444',
+              secondary: '#fff',
+            },
+          },
+        }}
+      />
+
       <Hero
         title="Kontakt"
         subtitle="Nehmen Sie Kontakt mit uns auf - Wir freuen uns auf Ihre Anfrage"
@@ -70,129 +131,170 @@ export default function KontaktPage() {
       <section className="section bg-white">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
+            {/* Enhanced Contact Form */}
             <div>
               <h2 className="text-3xl font-bold mb-6 text-secondary-900">
                 Anfrage senden
               </h2>
               <p className="text-secondary-600 mb-8">
-                Füllen Sie das Formular aus und wir melden uns schnellstmöglich bei Ihnen.
-                Alle Felder mit * sind Pflichtfelder.
+                Füllen Sie das Formular aus und fügen Sie optional Bilder Ihres Projekts hinzu.
+                Wir melden uns schnellstmöglich bei Ihnen.
               </p>
 
-              {submitted && (
-                <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-6">
-                  Vielen Dank für Ihre Nachricht! Wir melden uns in Kürze bei Ihnen.
-                </div>
-              )}
-
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                {/* Name */}
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-secondary-700 mb-2">
                     Name *
                   </label>
                   <input
+                    {...register('name')}
                     type="text"
                     id="name"
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                    placeholder="Ihr Name"
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors ${
+                      errors.name ? 'border-red-500' : 'border-secondary-300'
+                    }`}
+                    placeholder="Ihr vollständiger Name"
                   />
+                  {errors.name && (
+                    <p className="mt-2 text-sm text-red-600">{errors.name.message}</p>
+                  )}
                 </div>
 
+                {/* Email */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-secondary-700 mb-2">
                     E-Mail *
                   </label>
                   <input
+                    {...register('email')}
                     type="email"
                     id="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors ${
+                      errors.email ? 'border-red-500' : 'border-secondary-300'
+                    }`}
                     placeholder="ihre@email.de"
                   />
+                  {errors.email && (
+                    <p className="mt-2 text-sm text-red-600">{errors.email.message}</p>
+                  )}
                 </div>
 
+                {/* Phone */}
                 <div>
                   <label htmlFor="phone" className="block text-sm font-medium text-secondary-700 mb-2">
-                    Telefon
+                    Telefon (optional)
                   </label>
                   <input
+                    {...register('phone')}
                     type="tel"
                     id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors ${
+                      errors.phone ? 'border-red-500' : 'border-secondary-300'
+                    }`}
                     placeholder="+49 123 456789"
                   />
+                  {errors.phone && (
+                    <p className="mt-2 text-sm text-red-600">{errors.phone.message}</p>
+                  )}
                 </div>
 
+                {/* Service */}
                 <div>
                   <label htmlFor="service" className="block text-sm font-medium text-secondary-700 mb-2">
                     Gewünschte Leistung
                   </label>
                   <select
+                    {...register('service')}
                     id="service"
-                    name="service"
-                    value={formData.service}
-                    onChange={handleChange}
                     className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   >
                     <option value="">Bitte wählen...</option>
-                    <option value="renovierung">Renovierung</option>
-                    <option value="sanierung">Sanierung</option>
-                    <option value="innenausbau">Innenausbau</option>
-                    <option value="badezimmer">Badezimmer & Sanitär</option>
-                    <option value="elektro">Elektroarbeiten</option>
-                    <option value="reparatur">Reparaturen & Wartung</option>
+                    <option value="fliesen">Fliesen- & Plattenverlegung</option>
+                    <option value="bad">Badsanierung</option>
+                    <option value="terrasse">Terrassen & Balkone</option>
+                    <option value="kueche">Küchen</option>
+                    <option value="trockenbau">Trockenbau</option>
+                    <option value="maler">Malerarbeiten</option>
                     <option value="sonstiges">Sonstiges</option>
                   </select>
                 </div>
 
+                {/* Message */}
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-secondary-700 mb-2">
                     Ihre Nachricht *
                   </label>
                   <textarea
+                    {...register('message')}
                     id="message"
-                    name="message"
-                    required
-                    value={formData.message}
-                    onChange={handleChange}
                     rows={6}
-                    className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors ${
+                      errors.message ? 'border-red-500' : 'border-secondary-300'
+                    }`}
                     placeholder="Beschreiben Sie Ihr Projekt..."
+                  />
+                  {errors.message && (
+                    <p className="mt-2 text-sm text-red-600">{errors.message.message}</p>
+                  )}
+                </div>
+
+                {/* Image Upload */}
+                <div>
+                  <label className="block text-sm font-medium text-secondary-700 mb-2">
+                    Projekt-Bilder (optional)
+                  </label>
+                  <ImageUpload
+                    onImagesChange={setUploadedFiles}
+                    maxFiles={5}
+                    maxSize={10}
                   />
                 </div>
 
+                {/* Privacy */}
                 <div className="flex items-start">
                   <input
+                    {...register('privacy')}
                     type="checkbox"
                     id="privacy"
-                    required
-                    className="mt-1 mr-2"
+                    className="mt-1 mr-3 h-4 w-4 text-primary-600 focus:ring-primary-500 border-secondary-300 rounded"
                   />
                   <label htmlFor="privacy" className="text-sm text-secondary-600">
                     Ich habe die{' '}
-                    <a href="/datenschutz" className="text-primary-600 hover:underline">
+                    <a href="/datenschutz" className="text-primary-600 hover:underline font-medium">
                       Datenschutzerklärung
                     </a>{' '}
-                    zur Kenntnis genommen. *
+                    zur Kenntnis genommen und stimme der Verarbeitung meiner Daten zu. *
                   </label>
                 </div>
+                {errors.privacy && (
+                  <p className="mt-2 text-sm text-red-600">{errors.privacy.message}</p>
+                )}
 
+                {/* Submit Button */}
                 <button
                   type="submit"
-                  className="btn-primary w-full"
+                  disabled={isSubmitting}
+                  className={`btn-primary w-full flex items-center justify-center gap-2 ${
+                    isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
                 >
-                  Anfrage senden
+                  {isSubmitting ? (
+                    <>
+                      <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
+                      Wird gesendet...
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      Anfrage senden
+                    </>
+                  )}
                 </button>
               </form>
             </div>
@@ -205,8 +307,8 @@ export default function KontaktPage() {
 
               <div className="space-y-6 mb-8">
                 {contactInfo.map((item, index) => (
-                  <div key={index} className="flex items-start">
-                    <div className="text-4xl mr-4">{item.icon}</div>
+                  <div key={index} className="flex items-start gap-4 p-4 bg-secondary-50 rounded-lg">
+                    <div className="text-4xl">{item.icon}</div>
                     <div>
                       <h3 className="font-semibold text-lg text-secondary-900 mb-1">
                         {item.title}
@@ -222,8 +324,9 @@ export default function KontaktPage() {
               </div>
 
               {/* Opening Hours */}
-              <div className="bg-secondary-50 p-6 rounded-lg mb-8">
-                <h3 className="font-semibold text-lg text-secondary-900 mb-4">
+              <div className="bg-primary-50 border border-primary-200 p-6 rounded-lg mb-8">
+                <h3 className="font-semibold text-lg text-secondary-900 mb-4 flex items-center gap-2">
+                  <span>🕐</span>
                   Öffnungszeiten
                 </h3>
                 <div className="space-y-2 text-secondary-700">
@@ -242,12 +345,23 @@ export default function KontaktPage() {
                 </div>
               </div>
 
-              {/* Map Placeholder */}
-              <div className="bg-secondary-200 rounded-lg h-64 flex items-center justify-center">
-                <div className="text-center text-secondary-600">
-                  <div className="text-5xl mb-2">🗺️</div>
-                  <p>Google Maps Integration</p>
-                  <p className="text-sm">(Wird später hinzugefügt)</p>
+              {/* Features */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-center p-4 bg-white border border-secondary-200 rounded-lg">
+                  <div className="text-3xl mb-2">✅</div>
+                  <p className="text-sm font-medium text-secondary-900">Kostenlose Beratung</p>
+                </div>
+                <div className="text-center p-4 bg-white border border-secondary-200 rounded-lg">
+                  <div className="text-3xl mb-2">⚡</div>
+                  <p className="text-sm font-medium text-secondary-900">Schnelle Antwort</p>
+                </div>
+                <div className="text-center p-4 bg-white border border-secondary-200 rounded-lg">
+                  <div className="text-3xl mb-2">🎯</div>
+                  <p className="text-sm font-medium text-secondary-900">Präzise Kalkulation</p>
+                </div>
+                <div className="text-center p-4 bg-white border border-secondary-200 rounded-lg">
+                  <div className="text-3xl mb-2">🔒</div>
+                  <p className="text-sm font-medium text-secondary-900">Datenschutz</p>
                 </div>
               </div>
             </div>

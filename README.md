@@ -16,6 +16,15 @@ Eine state-of-the-art, professionelle Website für einen Fliesenleger-Fachbetrie
 - **Featured Projects**: Hervorhebung besonderer Projekte
 - **Click to Zoom**: Intuitive Bildvergrößerung
 
+### 📧 Enhanced Contact Form (v0.9+)
+- **Multi-Image Upload**: Drag & Drop mit bis zu 5 Bildern (je 10MB)
+- **Form Validation**: Zod Schema mit Echtzeit-Fehleranzeige
+- **Toast Notifications**: Visuelles Feedback bei Submit
+- **Supabase Backend**: Automatisches Speichern in PostgreSQL
+- **Image Storage**: Supabase Storage für hochgeladene Bilder
+- **Loading States**: Animated Spinner während Upload/Submit
+- **Error Handling**: Robuste Fehlerbehandlung
+
 ### ⚡ Vorher/Nachher-Slider
 - **Interactive Slider**: Drag & Touch-Support
 - **Before/After Comparison**: Visueller Vergleich von Projekten
