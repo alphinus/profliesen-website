@@ -60,6 +60,25 @@ export default function KontaktPage() {
       });
 
       if (result.success) {
+        // 3. Send email notification
+        try {
+          await fetch('/api/send-notification', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: data.name,
+              email: data.email,
+              phone: data.phone,
+              service: data.service,
+              message: data.message,
+              images: imageUrls,
+            }),
+          });
+        } catch (emailError) {
+          console.error('Email notification error:', emailError);
+          // Continue anyway - form was submitted successfully
+        }
+
         toast.success('✅ Anfrage erfolgreich gesendet! Wir melden uns in Kürze.', {
           duration: 5000,
         });
