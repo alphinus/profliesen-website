@@ -14,11 +14,63 @@ export interface GalleryImage {
 }
 
 interface ImageGalleryProps {
-  images: GalleryImage[];
-  categories: string[];
+  images?: GalleryImage[];
+  categories?: string[];
 }
 
-export default function ImageGallery({ images, categories }: ImageGalleryProps) {
+const defaultImages: GalleryImage[] = [
+  {
+    id: 1,
+    src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop',
+    alt: 'Modernes Badezimmer',
+    title: 'Luxus Badezimmer',
+    category: 'Badezimmer',
+    featured: true,
+  },
+  {
+    id: 2,
+    src: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&h=600&fit=crop',
+    alt: 'Küche mit Fliesenspiegel',
+    title: 'Designer Küche',
+    category: 'Küche',
+    featured: true,
+  },
+  {
+    id: 3,
+    src: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop',
+    alt: 'Wohnzimmer Boden',
+    title: 'Wohnzimmer Marmor',
+    category: 'Wohnbereich',
+  },
+  {
+    id: 4,
+    src: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&h=600&fit=crop',
+    alt: 'Terrasse',
+    title: 'Terrasse mit Holzoptik',
+    category: 'Außenbereich',
+  },
+  {
+    id: 5,
+    src: 'https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&h=600&fit=crop',
+    alt: 'Bad Dusche',
+    title: 'Walk-In Dusche',
+    category: 'Badezimmer',
+  },
+  {
+    id: 6,
+    src: 'https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=800&h=600&fit=crop',
+    alt: 'Küche modern',
+    title: 'Moderne Küchenplanung',
+    category: 'Küche',
+  },
+];
+
+const defaultCategories = ['Badezimmer', 'Küche', 'Wohnbereich', 'Außenbereich'];
+
+export default function ImageGallery({
+  images = defaultImages,
+  categories = defaultCategories
+}: ImageGalleryProps = {}) {
   const [selectedCategory, setSelectedCategory] = useState<string>('Alle');
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
 
