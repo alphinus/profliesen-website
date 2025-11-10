@@ -11,6 +11,12 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { name, email, phone, service, message, images } = body;
 
+    // Skip email if Resend is not configured
+    if (!resend) {
+      console.warn('RESEND_API_KEY not configured, skipping email notification');
+      return NextResponse.json({ success: true, emailSkipped: true });
+    }
+
     // Sende Benachrichtigung an dich
     const { data, error } = await resend.emails.send({
       from: 'ProFliesen Kontaktformular <onboarding@resend.dev>',
